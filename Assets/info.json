@@ -1,5 +1,0 @@
-{
-  "question": ["For integers \(a\) and \(b\), define \(a\) <strong>divides</strong> \(b\).","Define a proposition."],
-  "answer": ["For natural numbers \(a\) and \(b\) (or \(a\) is a <strong>divisor</strong> of \(b\), or \(b\) is a <strong> multiple</strong> of \(a\)) if and only if there is a natural number \(k\) such that \(b = ak\).
-Define a proposition.","A proposition is a sentence that has exactly one truth value: true, which we denote by T, or false, which we denote by F."]
-}

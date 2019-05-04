@@ -60,8 +60,8 @@
 				</div>
 			</div>";
 			$jqueryInside .= '$("#butDefS' . $count . '").click(function(){
-  	$("#defS' . $count . '").toggleClass("hidden");
-  });';
+  													$("#defS' . $count . '").toggleClass("hidden");
+  											});';
 		}
 		echo "<script>
 						$(document).ready(function(){
