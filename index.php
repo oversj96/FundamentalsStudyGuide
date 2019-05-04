@@ -20,10 +20,10 @@
 	<section class="hero is-primary is-bold">
 		<div class="hero-body">
 			<h1 class="title" color="white">
-				Math 300 
+				Math 300 - Study Guide
 			</h1>
 			<p class="subtitle">
-				A study guide website
+				For the mouths agape
 			</p>
 		</div>
 	</section>
@@ -60,7 +60,7 @@
 				</div>
 			</div>";
 			$jqueryInside .= '$("#butDefS' . $count . '").click(function(){
-  													$("#defS' . $count . '").toggleClass("hidden");
+  													$("#defS' . $count . '").fadeToggle("slow");
   											});';
 		}
 		echo "<script>
@@ -68,6 +68,7 @@
 							{$jqueryInside}
 						});
 					</script>";
+		$conn->close();
 		?> 
 	</section>
 </body>
