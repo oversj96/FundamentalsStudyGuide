@@ -13,7 +13,7 @@
 	<!-- <link rel="stylesheet" href="styles/debug.css"> -->
 </head>
 <style>
-	.hidden { display: none; }
+	.hidden { display: none; } 
 </style>
 <!-- /.hero -->
 <body>
@@ -34,34 +34,36 @@
 			<div class="notification is-dark" id ="theorems">
 				<strong><center>Definitions and Theorems</center></strong>
 			</div>
-			<?php
+
+			<!-- php -->
+			<?php	
 			require_once('docs/mysqli_connect.php');
-			$query = "SELECT question, answer
-			FROM studyinfo";
+			$query = "SELECT question, answer "
+				. "FROM studyinfo";
 			$response = @mysqli_query($conn, $query);
 
 			$jqueryInside = "";
 			$count = 0;
 			while($responseRow = $response->fetch_assoc()){
+
 				$count++;
-				echo "<div class=\"columns\">
-				<div class=\"column\">
-				<div class=\"notification\">
-				<p>
-				{$responseRow['question']}
-				</p>
-				</div>
-				</div>
-				<div class=\"column\">
-				<button class=\"button is-info is-outlined is-large is-fullwidth\" id=\"butDefS{$count}\">Solution</button>
-				<p class=\"section notification is-bold hidden\" id=\"defS{$count}\">
-				{$responseRow["answer"]}
-				</p>
-				</div>
-				</div>";
+
+				echo "<div class=\"columns\">"
+					. "<div class=\"column\">"
+				  .	"<div class=\"notification\">"
+				  . "<p>{$responseRow['question']}</p>"
+					. "</div>"
+					. "</div>"
+					. "<div class=\"column\">"
+					. "<a class=\"button is-info is-outlined is-large is-fullwidth\" id=\"butDefS{$count}\">Solution</a>"
+					. "<p class=\"section notification is-bold hidden\" id=\"defS{$count}\">{$responseRow["answer"]}</p>"
+					. "</div>"
+					. "</div>";
+							
+
 				$jqueryInside .= '$("#butDefS' . $count . '").click(function(){
-					$("#defS' . $count . '").fadeToggle("slow");
-				});';
+														$("#defS' . $count . '").fadeToggle("slow");
+													});';
 			}
 			echo "<script>
 			$(document).ready(function(){
@@ -69,7 +71,9 @@
 				});
 				</script>";
 				$conn->close();
-				?> 
+			?> 
+			<!-- end php -->
+
 			</section>
 		</body>
 		</html>
