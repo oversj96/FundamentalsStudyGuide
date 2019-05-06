@@ -14,6 +14,7 @@
 </head>
 <style>
 	.hidden { display: none; } 
+	.header { text-align: center;}
 </style>
 <!-- /.hero -->
 <body>
@@ -31,49 +32,115 @@
 	<!-- study guide -->
 	<section class="section" id="studyGuide">
 		<div class="container is-fluid">
-			<div class="notification is-dark" id ="theorems">
-				<strong><center>Definitions and Theorems</center></strong>
-			</div>
 
 			<!-- php -->
 			<?php	
+				// echo html for header
+				echo "<div class=\"notification is-dark header\" id =\"theorems\">"
+				. "<h1 class=\"title\" >Definitions and Theorems</h1>"
+				. "</div>";
+
+			// setup sql connection and perform query
 			require_once('docs/mysqli_connect.php');
-			$query = "SELECT question, answer "
-				. "FROM studyinfo";
+			$query = "SELECT question, answer, type "
+			. "FROM studyinfo";
 			$response = @mysqli_query($conn, $query);
 
+			// initialize variables for jquery and keep count of buttons
 			$jqueryInside = "";
 			$count = 0;
+
+			// loop until no definitions
 			while($responseRow = $response->fetch_assoc()){
-
-				$count++;
-
-				echo "<div class=\"columns\">"
+				// check row type
+				if ($responseRow['type'] != 'definition'){
+					break 1;
+				}
+					echo "<div class=\"columns\">"
 					. "<div class=\"column\">"
-				  .	"<div class=\"notification\">"
-				  . "<p>{$responseRow['question']}</p>"
+					.	"<div class=\"notification\">"
+					. "<p>{$responseRow['question']}</p>"
 					. "</div>"
 					. "</div>"
 					. "<div class=\"column\">"
 					. "<a class=\"button is-info is-outlined is-large is-fullwidth\" id=\"butDefS{$count}\">Solution</a>"
-					. "<p class=\"section notification is-bold hidden\" id=\"defS{$count}\">{$responseRow["answer"]}</p>"
+					. "<p class=\"section notification is-bold hidden\" id=\"defS{$count}\">{$responseRow['answer']}</p>"
 					. "</div>"
 					. "</div>";
-							
 
+				// implement javascript for solution buttons
+				$count++;			
 				$jqueryInside .= '$("#butDefS' . $count . '").click(function(){
-														$("#defS' . $count . '").fadeToggle("slow");
-													});';
+					$("#defS' . $count . '").fadeToggle("slow");
+				});';
 			}
-			echo "<script>
-			$(document).ready(function(){
-				{$jqueryInside}
-				});
-				</script>";
-				$conn->close();
+
+			// echo html for header
+			echo "<div class=\"notification is-dark header\" id =\"proofs\">"
+				. "<h1 class=\"title\" >Proofs</h1>"
+				. "</div>";
+
+			// loop until no proofs
+			while($responseRow = $response->fetch_assoc()){
+				// check row type
+				if ($responseRow['type'] != 'proof'){
+					break 1;
+				}
+					echo "<div class=\"columns\">"
+					. "<div class=\"column\">"
+					.	"<div class=\"notification\">"
+					. "<p>{$responseRow['question']}</p>"
+					. "</div>"
+					. "</div>"
+					. "<div class=\"column\">"
+					. "<a class=\"button is-info is-outlined is-large is-fullwidth\" id=\"butDefS{$count}\">Solution</a>"
+					. "<p class=\"section notification is-bold hidden\" id=\"defS{$count}\">{$responseRow['answer']}</p>"
+					. "</div>"
+					. "</div>";
+
+				// implement jquery actions for buttons
+				$count++;			
+				$jqueryInside .= '$("#butDefS' . $count . '").click(function(){
+					$("#defS' . $count . '").fadeToggle("slow");
+				});';
+			}
+
+			// echo html for header
+			echo "<div class=\"notification is-dark header\" id =\"other\">"
+				. "<h1 class=\"title\" >Multi-Part and Other Problems</h1>"
+				. "</div>";
+
+			// loop until no other questions, checking row type unneccessary at this stage
+			while($responseRow = $response->fetch_assoc()){
+					echo "<div class=\"columns\">"
+					. "<div class=\"column\">"
+					.	"<div class=\"notification\">"
+					. "<p>{$responseRow['question']}</p>"
+					. "</div>"
+					. "</div>"
+					. "<div class=\"column\">"
+					. "<a class=\"button is-info is-outlined is-large is-fullwidth\" id=\"butDefS{$count}\">Solution</a>"
+					. "<p class=\"section notification is-bold hidden\" id=\"defS{$count}\">{$responseRow['answer']}</p>"
+					. "</div>"
+					. "</div>";
+
+				// implement jquery actions for buttons
+				$count++;			
+				$jqueryInside .= '$("#butDefS' . $count . '").click(function(){
+					$("#defS' . $count . '").fadeToggle("slow");
+				});';
+			}
+
+			// finalize php and jquery, close out
+			echo "<script>"
+			.	"$(document).ready(function(){"
+			. "{$jqueryInside}"
+			. "});"
+			. "</script>";
+			$conn->close();
 			?> 
 			<!-- end php -->
-
-			</section>
-		</body>
-		</html>
+		</div>
+	</section>
+</body>
+</html>
